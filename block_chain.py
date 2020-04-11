@@ -2,10 +2,13 @@ from block import Block
 from datetime import datetime
 import json
 import pickle
+from transaction import Transaction
 
 class BlockChain:
     chainList = []
     difficulty = 3
+    pendingTransaction = []
+    reward = 1 #1 cryptocurrency
     
     def __init__(self):
         self.add_genesis_block()   
@@ -29,7 +32,16 @@ class BlockChain:
         #block.hash = block.calculate_hash()
         block.mine(self.difficulty)
         self.chainList.append(block)
-    
+        
+    def create_transaction(self, transaction):
+        self.pendingTransaction.append(transaction)
+        
+    def process_pending_transaction(self, minerAddress):
+        block = Block(datetime.now(), self.get_latest_block().hash, self.pendingTransaction)
+        self.add_block(block=block)
+        self.pendingTransaction = []
+        self.create_transaction(Transaction(None, minerAddress, self.reward))
+        
 #validation    
 def isValid(chainList):
     
@@ -47,13 +59,18 @@ def isValid(chainList):
         
         
 if __name__=="__main__":
+    
+    
     startTime = datetime.now()
 
     blockChain = BlockChain()
-    blockChain.add_block(Block(timeStamp=datetime.now(), previousHash=None, data="{sender:Akash,receiver:Ovi,amount:10}"))
-    blockChain.add_block(Block(timeStamp=datetime.now(), previousHash=None, data="{sender:Akash,receiver:Ovi,amount:30}"))
-    blockChain.add_block(Block(timeStamp=datetime.now(), previousHash=None, data="{sender:Akash,receiver:Ovi,amount:50}"))
 
+    blockChain.create_transaction(Transaction("Akash", "Ovi", 10))
+    blockChain.process_pending_transaction('Bhuiyan')
+    
+    blockChain.create_transaction(Transaction("Ovi", "Akash", 5))
+    blockChain.process_pending_transaction('Bhuiyan')
+    
     endTime = datetime.now()
 
     print(isValid(blockChain.chainList))
