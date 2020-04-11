@@ -5,6 +5,7 @@ import pickle
 
 class BlockChain:
     chainList = []
+    difficulty = 3
     
     def __init__(self):
         self.add_genesis_block()   
@@ -25,7 +26,8 @@ class BlockChain:
         latestBlock = self.get_latest_block()
         block.index = latestBlock.index + 1
         block.previousHash = latestBlock.hash
-        block.hash = block.calculate_hash()
+        #block.hash = block.calculate_hash()
+        block.mine(self.difficulty)
         self.chainList.append(block)
     
 #validation    
@@ -45,11 +47,15 @@ def isValid(chainList):
         
         
 if __name__=="__main__":
+    startTime = datetime.now()
+
     blockChain = BlockChain()
     blockChain.add_block(Block(timeStamp=datetime.now(), previousHash=None, data="{sender:Akash,receiver:Ovi,amount:10}"))
     blockChain.add_block(Block(timeStamp=datetime.now(), previousHash=None, data="{sender:Akash,receiver:Ovi,amount:30}"))
     blockChain.add_block(Block(timeStamp=datetime.now(), previousHash=None, data="{sender:Akash,receiver:Ovi,amount:50}"))
 
+    endTime = datetime.now()
+
     print(isValid(blockChain.chainList))
-    
-    
+    print('Duration : ', startTime, '-', endTime)
+
