@@ -1,8 +1,9 @@
 from block import Block
 from datetime import datetime
-import json
+import json, os
 import pickle
 from transaction import Transaction
+import constant as cnst
 
 class BlockChain:
     chainList = []
@@ -14,7 +15,7 @@ class BlockChain:
         self.add_genesis_block()   
     
     def create_genesis_block(self):
-        block = Block(datetime.now(), None, '{}')
+        block = Block(datetime.now(), '', None)
         block.block()
         return block
     
@@ -32,7 +33,7 @@ class BlockChain:
         #block.hash = block.calculate_hash()
         block.mine(self.difficulty)
         self.chainList.append(block)
-        
+
     def create_transaction(self, transaction):
         self.pendingTransaction.append(transaction)
         
@@ -74,5 +75,10 @@ if __name__=="__main__":
     endTime = datetime.now()
 
     print(isValid(blockChain.chainList))
+
+    if os.listdir(cnst.BLOCK_CHAIN_DIR) == []:
+        for block in blockChain.chainList:
+            block.save(dir=cnst.BLOCK_CHAIN_DIR)
+
     print('Duration : ', startTime, '-', endTime)
 
