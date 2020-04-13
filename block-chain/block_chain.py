@@ -1,7 +1,5 @@
 from block import Block
 from datetime import datetime
-import json, os
-import pickle
 from transaction import Transaction
 import constant as cnst
 
@@ -68,8 +66,11 @@ def isValid(chainList):
     for i in range(len(chainList)-1):
         previousBlock = chainList[i]
         currentBlock = chainList[i+1]
-        
-        if currentBlock.hash != currentBlock.calculate_hash():
+
+        # if currentBlock.hash != currentBlock.nonce_checking(currentBlock.nonce):
+        #     return False
+
+        if currentBlock.index == previousBlock.index:
             return False
         
         if currentBlock.previousHash != previousBlock.hash:

@@ -28,6 +28,6 @@ if __name__== '__main__':
     if len(sys.argv) >= 2:
         port = sys.argv[1]
     else:
-        port = 5000
+        port = 8000
 
     node.run(host='127.0.0.1', port=port)

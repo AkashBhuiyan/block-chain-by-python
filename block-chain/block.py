@@ -62,8 +62,18 @@ class Block:
                 self.transactions == other.transaction and
                 self.nonce == other.nonce
                 )
+    def nonce_checking(self, targetNonce):
+        nonce = 0
+        hash = ''
+        while nonce != targetNonce + 1:
+            nonce += 1
+            hash = self.calculate_hash()
+
         
     def save(self):
+        if not os.path.exists(cnst.BLOCK_CHAIN_DIR):
+            os.mkdir(cnst.BLOCK_CHAIN_DIR)
+
         index_string = str(self.index).zfill(6) #front of zeros so they stay in numerical order
         filename = '%s/%s.json' % (cnst.BLOCK_CHAIN_DIR, index_string)
         with open(filename, 'w') as block_file:
