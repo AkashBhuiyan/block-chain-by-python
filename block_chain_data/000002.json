@@ -1,0 +1,1 @@
+{"index": "2", "timeStamp": "2020-04-13 19:06:11.413844", "previousHash": "000ebfe0300a2e28989dcac2b3f72d73f49cc10114aff2987b2c60cd5a884893", "transactions": [{"fromAddress": null, "toAddress": "A", "amount": 1}, {"fromAddress": "Akash", "toAddress": "Ovi", "amount": 10}], "hash": "000ae682cfdb8583926eeb3293e5f8b899a1344faacb12e566193d82a516fb00", "nonce": "10219"}
