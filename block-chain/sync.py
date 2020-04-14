@@ -1,4 +1,3 @@
-from block import Block
 import os
 import json
 import constant as cnst

@@ -51,7 +51,14 @@ class Block:
         while self.hash == None or self.hash[0:difficulty] != leadingZeros:
             self.nonce += 1
             self.hash = self.calculate_hash()
-        print(self.nonce)
+        #print(self.nonce)
+
+    def is_valid(self):
+        self.calculate_hash()
+        if str(self.hash[0:cnst.DIFFICULTY]) == '0' * cnst.DIFFICULTY:
+            return True
+        else:
+            return False
 
 
     def __equal__(self, other):
@@ -62,12 +69,6 @@ class Block:
                 self.transactions == other.transaction and
                 self.nonce == other.nonce
                 )
-    def nonce_checking(self, targetNonce):
-        nonce = 0
-        hash = ''
-        while nonce != targetNonce + 1:
-            nonce += 1
-            hash = self.calculate_hash()
 
         
     def save(self):

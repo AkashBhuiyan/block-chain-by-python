@@ -66,9 +66,13 @@ def isValid(chainList):
     for i in range(len(chainList)-1):
         previousBlock = chainList[i]
         currentBlock = chainList[i+1]
+        temp = chainList[i+1]
+        temp.hash = ""
+        temp.nonce = 0
+        temp.mine(cnst.DIFFICULTY)
 
-        # if currentBlock.hash != currentBlock.nonce_checking(currentBlock.nonce):
-        #     return False
+        if currentBlock.hash != temp.hash:
+            return False
 
         if currentBlock.index == previousBlock.index:
             return False

@@ -1,6 +1,8 @@
 BLOCK_CHAIN_DIR = 'block_chain_data/'
 DIFFICULTY = 3
 
+STANDARD_ROUNDS = 1000
+
 PEERS = [
             'http://localhost:8000/',
             'http://localhost:8001/',

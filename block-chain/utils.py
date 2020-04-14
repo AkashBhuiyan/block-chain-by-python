@@ -1,4 +1,5 @@
-
+import constant as cnst
+import datetime
 
 def dict_to_object(block_info):
     from block import Block
@@ -35,3 +36,25 @@ def transaction_list_to_dict(self):
         else:
             trans_str += dict_val
     self.transactionHistory += trans_str + "]"
+
+
+def create_new_block_from_previous_block(previousBlock=None, transactions=None, timeStamp=None):
+    from block import Block
+    new_block = Block()
+    if not previousBlock:
+        # index zero and arbitrary previous hash
+        new_block.index = 0
+        new_block.previousHash = ''
+    else:
+        new_block.index = int(previousBlock.index) + 1
+        new_block.previousHash = previousBlock.hash
+
+    if not transactions:
+        filename = '%sdata.txt' % (cnst.BLOCK_CHAIN_DIR)
+        with open(filename, 'r') as data_file:
+            new_block.transactions = data_file.read()
+
+    if not timeStamp:
+        new_block.timeStamp = datetime.now()
+
+    return new_block
